@@ -1,0 +1,28 @@
+name: flutter_bloc_search
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cloud_firestore: ^0.14.2
+  cupertino_icons: ^1.0.0
+  equatable: ^1.2.5
+  firebase_core: ^0.5.1
+  flutter_bloc: ^6.0.6
+  meta: ^1.2.3
+  rxdart: ^0.24.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  very_good_analysis: ^1.0.3
+
+flutter:
+  uses-material-design: true
