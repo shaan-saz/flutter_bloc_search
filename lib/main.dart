@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_bloc_search/search/bloc/search_bloc.dart';
 import 'package:flutter_bloc_search/search/search.dart';
 
-import 'repository/search_repository.dart';
+import 'package:search_repository/search_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocProvider(
         create: (_) => SearchBloc(
-          searchRepository: SearchRepository(),
+          searchRepository: FirebaseSearchRepository(),
         ),
         child: const MyHomePage(title: 'Flutter Bloc Search'),
       ),

@@ -11,8 +11,8 @@ class SearchInitial extends SearchState {}
 
 class SearchLoading extends SearchState {}
 
-class SearchLoaded extends SearchState {
-  SearchLoaded({this.searchList});
+class SearchSuccess extends SearchState {
+  SearchSuccess({this.searchList});
 
   final List<String> searchList;
 

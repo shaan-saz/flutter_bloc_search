@@ -3,22 +3,22 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:flutter_bloc_search/repository/search_repository.dart';
 import 'package:meta/meta.dart';
+import 'package:search_repository/search_repository.dart';
 
 part 'search_event.dart';
 part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc({
-    @required SearchRepository searchRepository,
+    @required FirebaseSearchRepository searchRepository,
   })  : assert(searchRepository != null),
         _searchRepository = searchRepository,
         super(
           SearchInitial(),
         );
 
-  final SearchRepository _searchRepository;
+  final FirebaseSearchRepository _searchRepository;
 
   @override
   Stream<Transition<SearchEvent, SearchState>> transformEvents(
@@ -36,10 +36,10 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   Stream<SearchState> mapEventToState(
     SearchEvent event,
   ) async* {
-    if (event is SearchTermComplete) {
+    if (event is SearchTermSubmitted) {
       yield* _mapSearchTermCompleteToState(term: event.term);
     }
-    if (event is SearchTermTyping) {
+    if (event is SearchTermChanged) {
       yield* _mapSearchTermTypingToState(term: event.term);
     }
     if (event is SearchClear) {
@@ -51,11 +51,11 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     try {
       yield SearchLoading();
       final searchResults =
-          await _searchRepository.handleSearchComplete(term: term);
+          await _searchRepository.getWordsMatching(term: term);
       if (searchResults.isEmpty) {
         yield SearchEmpty(emptyMessage: 'No Search Results');
       } else {
-        yield SearchLoaded(
+        yield SearchSuccess(
           searchList: searchResults,
         );
       }
@@ -68,17 +68,15 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
     try {
       yield SearchLoading();
       final searchSuggestions =
-          await _searchRepository.handleSearchTyping(term: term);
+          await _searchRepository.getWordsStartingWith(term: term);
       if (searchSuggestions.isEmpty) {
         yield SearchEmpty(emptyMessage: 'No Search Suggestions');
       } else {
-        yield SearchLoaded(
+        yield SearchSuccess(
           searchList: searchSuggestions,
         );
       }
     } catch (e) {
-      // ignore: avoid_print
-      print(e);
       yield SearchError();
     }
   }

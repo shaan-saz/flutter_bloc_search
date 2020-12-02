@@ -39,7 +39,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildResults(BuildContext context) {
     if (query != '') {
       _searchBloc.add(
-        SearchTermComplete(query),
+        SearchTermSubmitted(query),
       );
     }
     return BuildSearch(searchBloc: _searchBloc);
@@ -49,7 +49,7 @@ class CustomSearchDelegate extends SearchDelegate {
   Widget buildSuggestions(BuildContext context) {
     if (query != '') {
       _searchBloc.add(
-        SearchTermTyping(query),
+        SearchTermChanged(query),
       );
     }
     return BuildSearch(searchBloc: _searchBloc);

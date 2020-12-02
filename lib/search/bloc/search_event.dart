@@ -7,16 +7,16 @@ abstract class SearchEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SearchTermComplete extends SearchEvent {
-  SearchTermComplete(this.term);
+class SearchTermSubmitted extends SearchEvent {
+  SearchTermSubmitted(this.term);
 
   final String term;
   @override
   List<Object> get props => [term];
 }
 
-class SearchTermTyping extends SearchEvent {
-  SearchTermTyping(this.term);
+class SearchTermChanged extends SearchEvent {
+  SearchTermChanged(this.term);
 
   final String term;
   @override

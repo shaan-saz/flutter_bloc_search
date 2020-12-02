@@ -22,7 +22,7 @@ class BuildSearch extends StatelessWidget {
             child: CircularProgressIndicator(),
           );
         }
-        if (state is SearchLoaded) {
+        if (state is SearchSuccess) {
           return SearchList(
             searchList: state.searchList,
           );
